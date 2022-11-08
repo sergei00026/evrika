@@ -1,0 +1,842 @@
+@use "sass:math";
+
+// Подключение миксинов
+@import "base/mixins";
+
+// Подключение шрифтов
+//&display=swap - добавить при подключении через плагин
+@import url("https://fonts.googleapis.com/css?family=Montserrat:regular,500,600,700&display=swap");
+
+// Подключить если есть локальные файлы шрифтов
+@import "fonts/fonts";
+
+// Подключение иконочных шрифтов ====================================================================================================// Подключить если есть файл иконочного шрифта
+@import "fonts/icons";
+
+// Шрифт по умолчанию ====================================================================================================
+$fontFamily: "Montserrat";
+$fontSize: rem(13); // где 14(px) - размер шрифта по умолчанию из макета
+
+// Основные цвета
+$mainColor: #000; // Цвет шрифта по умолчанию
+
+// Настройки адаптивной сетки ====================================================================================================
+// Минимальная ширина страницы
+$minWidth: 320;
+// Ширина полотна (макета)
+$maxWidth: 1440;
+// Ширина ограничивающего контейнера (0 = нет ограничения)
+$maxWidthContainer: 1120;
+// Общий отступ у контейнера
+// (30 = по 15px слева и справа, 0 = нет отступа)
+$containerPadding: 30;
+
+// Ширина срабатывания первого брейкпоинта
+$containerWidth: $maxWidthContainer + $containerPadding;
+
+// Брейк-поинты
+$pc: em($containerWidth); // ПК, ноутбуки, некоторые планшеты в горизонтальном положении
+$tablet: em(991.98); // Планшеты, некоторые телефоны в горизонтальном положении
+$mobile: em(767.98); // Телефоны L
+$mobileSmall: em(479.98); // Телефоны S
+
+// Тип адаптива:
+// 1 = отзывчивость (у контейнера нет брейкпоинтов),
+// 2 = по брейк-поинтам (контейнер меняет свою ширину по брейк-поинтам)
+$responsiveType: 1;
+
+// Обнуление
+@import "base/null";
+
+// Стили тега BODY
+body {
+	// Скролл заблокирован
+	.lock & {
+		overflow: hidden;
+		touch-action: none;
+	}
+	// Сайт загружен
+	.loaded & {
+	}
+}
+
+// Оболочка wrapper
+.wrapper {
+	min-height: 100%;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	// Прижимаем footer
+	> main {
+		flex: 1 1 auto;
+	}
+	// Фикс для слайдеров
+	> * {
+		min-width: 0;
+	}
+}
+// Ограничивающий контейнер
+
+@if ($responsiveType==1) {
+	// Отзывчивая
+	[class*="__container"] {
+		@if ($maxWidthContainer>0) {
+			max-width: rem($maxWidthContainer);
+			box-sizing: content-box;
+			margin: 0 auto;
+		}
+		@if ($containerPadding>0) {
+			padding: 0 rem(math.div($containerPadding, 2));
+		}
+	}
+} @else {
+	// По брейк-поинтам
+	[class*="__container"] {
+		margin: 0 auto;
+		@if ($maxWidthContainer>0) {
+			max-width: rem($maxWidthContainer);
+			box-sizing: content-box;
+		} @else {
+			@if ($containerPadding>0) {
+				padding: 0 rem(math.div($containerPadding, 2));
+			}
+		}
+		@media (max-width: $pc) {
+			max-width: rem(970);
+		}
+		@media (max-width: $tablet) {
+			max-width: rem(750);
+		}
+		@media (max-width: $mobile) {
+			max-width: none;
+			@if ($containerPadding>0 and $maxWidthContainer>0) {
+				padding: 0 rem(math.div($containerPadding, 2));
+			}
+		}
+	}
+}
+
+// Подключение базовых стилей, шаблонов (заготовок) и вспомогательных  классов
+// Для подключения/отключения конкретных стилей смотри base.scss
+@import "base";
+
+// Подключение стилей общих элементов проекта
+@import "common";
+
+// Подключение стилей отдельных блоков
+@import "header";
+@import "footer";
+
+// Подключение стилей отдельных страниц
+.page {
+	// .page__main
+	&__main {
+	}
+	// .page__price
+	&__price {
+	}
+	// .page__calc
+	&__calc {
+	}
+	// .page__jobs
+	&__jobs {
+	}
+	// .page__advantages
+	&__advantages {
+	}
+	// .page__sertificats
+	&__sertificats {
+	}
+	// .page__partners
+	&__partners {
+	}
+	// .page__reviews
+	&__reviews {
+	}
+}
+.main-page {
+	@include adaptiveValue("padding-top", 90, 50);
+	@include adaptiveValue("padding-bottom", 100, 50);
+	// .main-page_inp-text
+	&_inp-text {
+		min-height: 46px;
+		display: inline-flex;
+		align-items: center;
+		padding: 13px 15px 16px;
+		border: 1px solid #d5d5d5;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: math.div(17, 14);
+		min-width: 273px;
+		&::placeholder {
+			color: #565656;
+		}
+	}
+	// .main-page_inp-tel
+	&_inp-tel {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: math.div(15, 12);
+		min-height: 46px;
+		display: inline-flex;
+		align-items: center;
+		padding: 13px 15px 16px;
+		border: 1px solid #d5d5d5;
+		font-weight: 400;
+		font-size: 14px;
+		line-height: math.div(17, 14);
+		min-width: 273px;
+
+		&::placeholder {
+			color: #565656;
+		}
+	}
+	// .main-page__container
+	&__container {
+	}
+	// .main-page__title
+	&__title {
+		font-weight: 700;
+		font-size: 48px;
+		line-height: math.div(59, 48);
+		margin-bottom: 48px;
+	}
+	// .main-page__body
+	&__body {
+		box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+		padding: 49px 96px 43px;
+	}
+	// .main-page__heading
+	&__heading {
+		margin-bottom: 30px;
+	}
+	// .main-page__box
+	&__box {
+		display: flex;
+		align-items: flex-end;
+		gap: 14px;
+		margin-bottom: 30px;
+	}
+	// .main-page__lab-text
+	&__lab-text {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+	// .main-page__lab-tel
+	&__lab-tel {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		font-weight: 500;
+		font-size: 12px;
+		line-height: math.div(15, 12);
+	}
+	// .main-page__button
+	&__button {
+		background: #098fcf;
+		font-weight: 600;
+		font-size: 13px;
+		line-height: math.div(16, 13);
+		min-width: 258px;
+		color: #ffffff;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 14px 20px 16px;
+	}
+	// .main-page__chbox
+	&__chbox {
+	}
+}
+//==================================
+.price-page {
+	@include adaptiveValue("padding-bottom", 90, 50);
+	// .price-page__container
+	&__container {
+	}
+	// .price-page__heading
+	&__heading {
+		margin-bottom: rem(48);
+	}
+	// .price-page__body
+	&__body {
+		@media (max-width: $mobile) {
+			overflow: hidden;
+			overflow-x: scroll;
+		}
+	}
+	// .price-page__titles
+	&__titles {
+		min-width: 738px;
+
+		background: #043c77;
+		font-weight: 600;
+		font-size: 13px;
+		line-height: math.div(16, 13);
+		color: #ffffff;
+		min-height: 56px;
+		display: grid;
+		align-items: center;
+		// gap: 30px;
+		grid-template-columns: calc(2fr) calc(3fr) calc(3fr) calc(2fr) calc(2fr);
+		margin-bottom: 20px;
+	}
+	// .price-page__varieties
+	&__varieties {
+		padding: 5px 20px;
+	}
+	// .price-page__class
+	&__class {
+		padding: 5px 5px 5px 30px;
+	}
+	// .price-page__manufacturer
+	&__manufacturer {
+		padding: 5px 5px 5px 30px;
+	}
+	// .price-page__cash
+	&__cash {
+		padding: 5px 5px 5px 30px;
+	}
+	// .price-page__chashless
+	&__chashless {
+		padding: 5px 5px 5px 30px;
+	}
+	// .price-page__dt
+	&__dt {
+	}
+}
+
+.dt-price {
+	min-width: 738px;
+
+	display: grid;
+	grid-template-columns: 2fr 10fr;
+	font-weight: 600;
+	font-size: 13px;
+	line-height: math.div(16, 13);
+	// column-gap: 30px;
+	// .dt-price__varieties
+	&__varieties {
+		background: #098fcf;
+		font-weight: 700;
+		font-size: 24px;
+		line-height: math.div(29, 24);
+		color: #ffffff;
+		padding: 16px 20px;
+		margin-bottom: 20px;
+	}
+	// .dt-price__box
+	&__box {
+		display: grid;
+		grid-template-columns: 3fr 7fr;
+		border-bottom: 1px solid #e7e7e7;
+		border-top: 1px solid #e7e7e7;
+		margin-bottom: 20px;
+		& > div {
+			min-height: 47px;
+		}
+	}
+	// .dt-price__class
+	&__class {
+		padding: 16px 5px 16px 30px;
+	}
+	// .dt-price__box-2
+	&__box-2 {
+		display: grid;
+		grid-template-columns: 3fr 2fr 2fr;
+		border-right: 1px solid #e7e7e7;
+		border-bottom: 1px solid #e7e7e7;
+		border-left: 1px solid #e7e7e7;
+		&:last-child {
+			border-bottom: none;
+		}
+		& > div {
+			padding: 16px 5px 16px 30px;
+
+			min-height: 47px;
+		}
+	}
+	// .dt-price__manufacturer
+	&__manufacturer {
+	}
+	// .dt-price__cash
+	&__cash {
+	}
+	// .dt-price__chashless
+	&__chashless {
+	}
+}
+//============================
+.calc-page {
+	background: #f9f9f9;
+	@include adaptiveValue("padding-top", 74, 50);
+	@include adaptiveValue("padding-bottom", 73, 50);
+	// .calc-page__container
+	&__container {
+	}
+	// .calc-page__form
+	&__form {
+		display: grid;
+	}
+	// .calc-page__heading
+	&__heading {
+		margin-bottom: 34px;
+	}
+	// .calc-page__body
+	&__body {
+		display: grid;
+		gap: 30px;
+		@media (min-width: $mobile) {
+			grid-template-columns: 5fr 7fr;
+		}
+	}
+	// .calc-page__actions
+	&__actions {
+	}
+	// .calc-page__box
+	&__box {
+		display: grid;
+		gap: 8px;
+		input[type="text"],
+		input[type="number"] {
+			background: #ffffff;
+			border: 1px solid #d9d9d9;
+			min-height: 46px;
+			padding: 13px 15px 16px;
+
+			&::placeholder {
+				color: #565656;
+				transition: all 1s ease 0s;
+			}
+			&:focus {
+				&::placeholder {
+					transform: translateX(-100%);
+				}
+			}
+		}
+		&:not(:last-child) {
+			margin-bottom: 16px;
+		}
+		// .calc-page__box_range
+		&_range {
+			gap: 0;
+			label {
+				margin-bottom: rem(8);
+			}
+		}
+	}
+	// .calc-page__lab
+	&__lab {
+	}
+	// .calc-page__select
+	&__select {
+	}
+	// .calc-page__range
+	&__range {
+	}
+	// .calc-page__adress
+	&__adress {
+	}
+	// .calc-page__inp-tel
+	&__inp-tel {
+	}
+	// .calc-page__text-inp
+	&__text-inp {
+	}
+	// .calc-page__result
+	&__result {
+	}
+}
+
+.result-calc {
+	background: #ffffff;
+	box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.1);
+	padding: 40px;
+	@media (max-width: $mobile) {
+		padding: 20px;
+	}
+	// .result-calc__title
+	&__title {
+		font-weight: 500;
+		font-size: 24px;
+		line-height: math.div(29, 24);
+		margin-bottom: 16px;
+	}
+	// .result-calc__box
+	&__box {
+		border-top: 1px solid #e7e7e7;
+	}
+	// .result-calc__price
+	&__price {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 16px 0;
+		font-size: 16px;
+		line-height: 140%;
+	}
+	// .result-calc__liter
+	&__liter {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 16px 0;
+		font-size: 16px;
+		line-height: 140%;
+	}
+	// .result-calc__desc
+	&__desc {
+		font-size: 12px;
+		line-height: math.div(15, 12);
+		color: #565656;
+		margin-bottom: 16px;
+	}
+	// .result-calc__benefit
+	&__benefit {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 16px 0;
+		font-size: 16px;
+		line-height: 140%;
+	}
+	// .result-calc__button
+	&__button {
+		background: #098fcf;
+		font-weight: 600;
+		font-size: 13px;
+		line-height: math.div(16, 13);
+		text-align: center;
+		color: #ffffff;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 46px;
+		padding: 14px 67px 16px;
+		margin-top: 16px;
+	}
+}
+//====================================================
+
+.jobs-page {
+	@include adaptiveValue("padding-top", 100, 50);
+	@include adaptiveValue("padding-bottom", 100, 50);
+	// .jobs-page__container
+	&__container {
+	}
+	// .jobs-page__heading
+	&__heading {
+		margin-bottom: 48px;
+	}
+	// .jobs-page__body
+	&__body {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+		gap: 31px;
+		@media (max-width: $mobileSmall) {
+			margin: 0 -15px;
+		}
+	}
+	// .jobs-page__item
+	&__item {
+		background: #043c77;
+		color: #ffffff;
+		padding: 30px 30px 27px;
+		&:last-child {
+			padding: 30px 32px 27px 30px;
+		}
+	}
+	// .jobs-page__top
+	&__top {
+		display: flex;
+		justify-content: space-between;
+		&:not(:last-child) {
+			margin-bottom: 30px;
+		}
+		&::before {
+			font-size: 64px;
+		}
+	}
+	// .jobs-page__top=box
+	&__top-box {
+		display: grid;
+		gap: 17px;
+	}
+	// .jobs-page__time
+	&__time {
+		font-weight: 600;
+		font-size: 15px;
+		line-height: math.div(18, 15);
+	}
+	// .jobs-page__img
+	&__img {
+	}
+	// .jobs-page__title
+	&__title {
+		font-weight: 500;
+		font-size: 21px;
+		line-height: math.div(26, 21);
+		&:not(:last-child) {
+			margin-bottom: 24px;
+		}
+	}
+	// .jobs-page__desc
+	&__desc {
+		font-size: 16px;
+		line-height: 140%;
+		&:not(:last-child) {
+			margin-bottom: 24px;
+		}
+	}
+	// .jobs-page__text
+	&__text {
+		font-size: 12px;
+		line-height: 140%;
+		&:not(:last-child) {
+			margin-bottom: 24px;
+		}
+	}
+}
+//=============================================================
+.advantages-page {
+	background: #f9f9f9;
+	padding-top: 80px;
+	padding-bottom: 72px;
+	// .advantages-page__container
+	&__container {
+	}
+	// .advantages-page__heading
+	&__heading {
+		margin-bottom: 48px;
+	}
+	// .advantages-page__body
+	&__body {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+		gap: 30px;
+	}
+	// .advantages-page__item
+	&__item {
+		display: flex;
+		gap: 19px;
+		padding: 20px;
+		background: #ffffff;
+		&::before {
+			font-size: 48px;
+		}
+	}
+	// .advantages-page__box
+	&__box {
+		display: grid;
+		gap: 12px;
+	}
+	// .advantages-page__title
+	&__title {
+		font-weight: 600;
+		font-size: 15px;
+		line-height: 18px;
+	}
+	// .advantages-page__desc
+	&__desc {
+		font-size: 14px;
+		line-height: math.div(17, 14);
+		color: #565656;
+	}
+}
+//===============================================
+
+.sertificats-page {
+	@include adaptiveValue("padding-top", 100, 50);
+	@include adaptiveValue("padding-bottom", 50, 25);
+	// .sertificats-page__container
+	&__container {
+		position: relative;
+	}
+	// .sertificats-page__heading
+	&__heading {
+		margin-bottom: 48px;
+		display: flex;
+		gap: 15px;
+		justify-content: space-between;
+		@media (max-width: $mobile) {
+			flex-direction: column;
+		}
+	}
+	// .sertificats-page__slider
+	&__slider {
+	}
+	// .sertificats-page__wrapper
+	&__wrapper {
+	}
+	// .sertificats-page__slide
+	&__slide {
+		padding: 28px 20px;
+		text-align: center;
+	}
+	// .sertificats-page__img
+	&__img {
+		max-width: 100%;
+	}
+	// .sertificats-page__buttons
+	&__buttons {
+		display: flex;
+		gap: 16px;
+		justify-content: center;
+	}
+	// .sertificats-page__prev
+	&__prev {
+	}
+	// .sertificats-page__next
+	&__next {
+	}
+}
+//==============================================
+.partners-page {
+	@include adaptiveValue("padding-top", 50, 25);
+	@include adaptiveValue("padding-bottom", 100, 50);
+	// .partners-page__container
+	&__container {
+	}
+	// .partners-page__heading
+	&__heading {
+		margin-bottom: 48px;
+	}
+	// .partners-page__slider
+	&__slider {
+	}
+	// .partners-page__wrapper
+	&__wrapper {
+	}
+	// .partners-page__slide
+	&__slide {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+	}
+	// .partners-page__img
+	&__img {
+		max-width: 100%;
+	}
+	// .partners-page__pagination
+	&__pagination {
+		@include adaptiveValue("margin-top", 100, 50);
+		display: flex;
+		gap: 46px;
+		justify-content: center;
+		.swiper-pagination-bullet {
+			width: 4px;
+			height: 4px;
+			background: #d5d5d5;
+			border-radius: 50%;
+			cursor: pointer;
+			transition: all 0.3s ease 0s;
+		}
+		.swiper-pagination-bullet-active {
+			width: 8px;
+			height: 8px;
+			background: #098fcf;
+			border-radius: 50%;
+		}
+	}
+}
+//=================================================
+.reviews-page {
+	background: #f9f9f9;
+	@include adaptiveValue("padding-top", 80, 50);
+	@include adaptiveValue("padding-bottom", 80, 50);
+	// .reviews-page__container
+	&__container {
+	}
+	// .reviews-page__heading
+	&__heading {
+		display: flex;
+		justify-content: space-between;
+		gap: 15px;
+		margin-bottom: rem(48);
+		@media (max-width: $mobile) {
+			flex-direction: column;
+		}
+	}
+	// .reviews-page__buttons
+	&__buttons {
+		display: flex;
+		gap: 16px;
+		justify-content: center;
+	}
+	// .reviews-page__prev
+	&__prev {
+	}
+	// .reviews-page__next
+	&__next {
+	}
+	// .reviews-page__slider
+	&__slider {
+		&:not(:last-child) {
+			margin-bottom: 44px;
+		}
+	}
+	// .reviews-page__wrapper
+	&__wrapper {
+	}
+	// .reviews-page__slide
+	&__slide {
+		min-height: 368px;
+		padding: 40px;
+		display: flex;
+		flex-direction: column;
+		background: #ffffff;
+	}
+	// .reviews-page__title
+	&__title {
+		font-weight: 600;
+		font-size: 15px;
+		line-height: math.div(18, 15);
+
+		&:not(:last-child) {
+			margin-bottom: 12px;
+		}
+	}
+	// .reviews-page__text
+	&__text {
+		font-weight: 500;
+		font-size: 12px;
+		line-height: math.div(15, 12);
+		color: #565656;
+		&:not(:last-child) {
+			margin-bottom: 40px;
+		}
+	}
+	// .reviews-page__desc
+	&__desc {
+		font-size: 16px;
+		line-height: 140%;
+		&:not(:last-child) {
+			margin-bottom: 12px;
+		}
+	}
+	// .reviews-page__link
+	&__link {
+		margin-top: auto;
+		font-weight: 600;
+		font-size: 13px;
+		line-height: math.div(16, 13);
+		color: #098fcf;
+	}
+	// .reviews-page__button
+	&__button {
+		font-weight: 600;
+		font-size: 13px;
+		line-height: math.div(16, 13);
+		text-align: center;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		color: #ffffff;
+		background: #098fcf;
+		min-height: 46px;
+		padding: 14px 63px 16px;
+		display: block;
+		margin: 0 auto;
+	}
+}

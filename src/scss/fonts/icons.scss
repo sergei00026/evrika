@@ -1,0 +1,58 @@
+%ic {
+	font-family: "icons";
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+[class*="_icon-"] {
+	&:before {
+		@extend %ic;
+		display: block;
+	}
+}
+
+._icon-arrow:before {
+	content: "\e900";
+}
+._icon-certificate:before {
+	content: "\e901";
+}
+._icon-click:before {
+	content: "\e902";
+	color: #fff;
+}
+._icon-clock:before {
+	content: "\e903";
+}
+._icon-gas:before {
+	content: "\e904";
+}
+._icon-ok:before {
+	content: "\e905";
+}
+._icon-phone-big:before {
+	content: "\e906";
+}
+._icon-place:before {
+	content: "\e907";
+}
+._icon-ruble:before {
+	content: "\e908";
+}
+._icon-shield:before {
+	content: "\e909";
+}
+._icon-tel:before {
+	content: "\e90a";
+}
+._icon-user:before {
+	content: "\e90b";
+	color: #fff;
+}
+._icon-way:before {
+	content: "\e90c";
+}

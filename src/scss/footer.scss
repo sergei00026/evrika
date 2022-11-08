@@ -1,0 +1,75 @@
+//====================================================================================================
+.footer {
+	background: #f9f9f9;
+	padding-top: 50px;
+	padding-bottom: 20px;
+	// .footer__container
+	&__container {
+	}
+	// .footer__body
+	&__body {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 30px;
+		margin-bottom: 20px;
+	}
+	// .footer__item
+	&__item {
+		// .footer__item_list
+		&_list {
+			> li {
+				&:not(:last-child) {
+					margin-bottom: 10px;
+				}
+			}
+		}
+		&:last-child {
+			text-align: right;
+			@media (max-width: em(1000)) {
+				text-align: left;
+			}
+		}
+	}
+	// .footer__logo
+	&__logo {
+		max-width: 100%;
+		margin-bottom: 15px;
+		display: inline-block;
+	}
+	// .footer__copy
+	&__copy {
+		font-size: 12px;
+	}
+	// .footer__point
+	&__point {
+	}
+	// .footer__link
+	&__link {
+		font-weight: 600;
+		font-size: 14px;
+		line-height: 130%;
+	}
+	// .footer__sale
+	&__sale {
+		font-weight: 500;
+		font-size: 14px;
+		line-height: 130%;
+		margin-bottom: rem(10);
+	}
+	// .footer__tel
+	&__tel {
+		font-weight: 600;
+		font-size: 15px;
+		line-height: math.div(16, 13);
+		color: #098fcf;
+	}
+	// .footer__politika
+	&__politika {
+	}
+	// .footer__politika-link
+	&__politika-link {
+		font-size: 14px;
+	}
+}
+
+//====================================================================================================
